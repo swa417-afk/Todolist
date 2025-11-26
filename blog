@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechScribe | Decoding the Black Box</title>
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #e0e0e0;
+            --accent-color: #00f0ff; /* Electric Blue from Sierra Warren */
+            --accent-glow: rgba(0, 240, 255, 0.2);
+            --secondary-bg: #1a1a1a;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: rgba(26, 26, 26, 0.95);
+            border-bottom: 1px solid var(--accent-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero / Header */
+        header {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(180deg, rgba(0,240,255,0.05) 0%, rgba(13,13,13,1) 100%);
+            border-bottom: 1px solid #333;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta {
+            color: #888;
+            font-size: 0.9rem;
+            font-family: var(--font-mono);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
+            margin-top: 2.5rem;
+        }
+
+        h3 {
+            color: #fff;
+            margin-top: 2rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: #ccc;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--secondary-bg);
+            border: 1px solid #333;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background-color: #222;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background-color: #252525;
+        }
+
+        /* Sidebar / Footer elements */
+        .highlight-box {
+            background-color: rgba(0, 240, 255, 0.05);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        .author-bio {
+            background-color: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 4rem;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-bio img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem 2rem 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid #333;
+            color: #666;
+            font-size: 0.8rem;
+            background-color: #0a0a0a;
+        }
+
+        /* Badge Styling */
+        .footer-badge {
+            display: block;
+            width: 120px; /* Adjust width as preferred */
+            height: auto;
+            margin: 0 auto 1.5rem auto; /* Center align and add spacing below */
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-badge:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">TechScribe</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Decoding the "Black Box"</h1>
+        <div class="meta">
+            Posted: November 26, 2025 | Category: Career Advice / AI Case Studies
+        </div>
+    </header>
+
+    <main>
+        <p>If you are thinking about becoming a technical writer, you have probably heard the rumors: <em>"AI is going to do all the writing."</em></p>
+
+        <p>I used to worry about that, too. But after wrapping up my latest project—a complex documentation suite for an AI development firm called <strong>Sierra Warren</strong>—I realized the truth. The more abstract the technology becomes, the more they need us to explain it.</p>
+
+        <p>In this post, I want to show you exactly how a technical writer adds value to an AI project. It’s not just about correcting grammar; it’s about <strong>Audience Analysis</strong> and <strong>Information Architecture</strong>.</p>
+
+        <h2>The Challenge: Visualizing the Invisible</h2>
+        <p>In this course, we learned that our main job is to "advocate for the user." But what do you do when the "user" has to understand an invisible algorithm?</p>
+
+        <p>For the Sierra Warren project, I was handed a concept called the <em>"Glass Substrate Protocol."</em> The engineers knew how the code worked, but the investors didn't. My creative brief explicitly asked for <strong>"Breaking Black Box visualization."</strong></p>
+
+        <div class="highlight-box">
+            <strong>Lesson:</strong> As a modern technical writer, you must think visually. Your words provide the context, but your layout provides the map.
+        </div>
+
+        <h2>One Source, Four Voices</h2>
+        <p>The biggest misconception about technical writing is that we only write manuals. For the Sierra Warren project, I had to take one technology and translate it into four distinct "languages" for four different audiences.</p>
+        
+        <p>Here is a breakdown of how I adapted the content based on <strong>Audience Analysis</strong>:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>The Deliverable</th>
+                    <th>The Audience</th>
+                    <th>My Strategy & Tone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. The White Paper</strong></td>
+                    <td>Engineers & CTOs</td>
+                    <td><strong>Authoritative.</strong> Focused on the "3-layer architecture." I used monospaced fonts for code blocks to signal technical depth.</td>
+                </tr>
+                <tr>
+                    <td><strong>2. The Patent Draft</strong></td>
+                    <td>Lawyers</td>
+                    <td><strong>Formal.</strong> This required "numbered claim styling" and strict compliance. No marketing fluff—just legal precision.</td>
+                </tr>
+                <tr>
+                    <td><strong>3. The Pitch Deck</strong></td>
+                    <td>Investors</td>
+                    <td><strong>Cinematic.</strong> I shifted to a "motion-ready" style, focusing on the problem/solution narrative to secure funding.</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Executive Brief</strong></td>
+                    <td>C-Suite Execs</td>
+                    <td><strong>Concise.</strong> Used a "Z-pattern layout" with bold stats. Executives don't read; they scan.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>The Role of Ethics</h2>
+        <p>Finally, working on documents like the <strong>Provisional Patent Draft</strong> reminded me of the heavy role <strong>Ethics</strong> plays in our field. When describing the <em>"Neural Equalizer"</em> or the <em>"Hardware Lock flow,"</em> accuracy is an ethical obligation. If I am vague in the patent draft, the company loses its intellectual property. If I am unclear in the safety protocols, a user could compromise the system.</p>
+
+        <h2>Your Takeaway</h2>
+        <p>If you are looking to break into this field, don't fear the tech. Embrace it. Projects like Sierra Warren prove that code is useless if no one understands it. Your value lies in your ability to look at a complex "Futuristic Startup" idea and translate it into clear, usable, and human-friendly documentation.</p>
+
+        <a href="#" class="btn">Download Free Templates</a>
+
+        <div class="author-bio">
+            <div style="background-color: var(--accent-color); width: 60px; height: 60px; border-radius: 50%;"></div>
+            <div>
+                <strong>About the Author</strong><br>
+                <small>Senior Technical Writer passionate about usability, document design, and translating "dev-speak" into English. When I'm not documenting AI, I'm drinking too much coffee and tweaking CSS.</small>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <!-- LINKED BADGE SECTION -->
+        <a href="https://influentialwomen.com/client/edit-profile" target="_blank">
+            <img src="badge.png" alt="Influential Women Verified Badge" class="footer-badge">
+        </a>
+        
+        <p>&copy; 2025 TechScribe. All rights reserved.</p>
+        <br>
+        <a href="#" style="color: #666; text-decoration: none; margin: 0 10px;">Privacy Policy</a> | 
+        <a href="#" style="color: #666; text-decoration: none; margin: 0 10px;">Terms of Use</a>
+    </footer>
+
+</body>
+</html>  
