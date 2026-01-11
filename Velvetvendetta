@@ -28,5 +28,12 @@ git remote add origin https://github.com/<USERNAME>/Velvet-Vendetta-Day-of-Order
 # 8. Push initial commit to GitHub
 git branch -M main
 git push -u origin main
+cd ~/Projects
+mkdir VelvetVendetta
+cd VelvetVendetta
+
+git init
+
+mkdir -p Assets/Scripts
 
 
