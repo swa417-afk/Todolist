@@ -1,37 +1,55 @@
-from flask import Flask, request, jsonify
-import openai
+# Such a Gem! — Rally Royale: Battle of the Chat
 
-app = Flask(__name__)
+A Twitch Video Component extension that turns your stream into a live physics battleground. Viewers buy gem drops (Bits) to spawn gems into a Holographic Prism Arena. Gems stack, shatter, link with chain lightning, and push the Rally Meter toward chaotic Royale phases. Streamers can trigger boss events and control arena parameters.
 
-# Replace with your OpenAI GPT API key
-openai.api_key = "YOUR_OPENAI_API_KEY"
+## Repository layout
 
-# Example resource FAQs and templates
-resource_templates = {
-    "scheduling": "Please confirm your availability for the following events: {events}",
-    "onboarding": "Welcome, {name}! Here are your onboarding steps: {steps}",
-    "donor": "Thank you, {donor}! Your donation of {amount} supports {project}.",
-    "reporting": "Here is your weekly report summary: {summary}"
-}
+- **extension-src/** — static frontend files for the Video Component, Config, and Live Config pages.
+- **ebs/** — production-ready Extension Backend Service (EBS) with EventSub verification, WebSocket broadcasting, OAuth scaffolding, and admin endpoints.
+- **packaging/** — ZIP packaging script to create the uploadable extension ZIP.
+- **Dockerfile** — minimal container for the EBS.
+- **.github/workflows/ci.yml** — CI workflow to build and produce the ZIP artifact.
 
-def generate_response(user_message):
-    prompt = f"""You are a helpful nonprofit resource manager assistant. Based on the query below, respond appropriately:
-    Query: "{user_message}"
-    If the query references scheduling, onboarding, donor updates, or reports, use the matching template.
-    Otherwise, respond as a friendly chatbot for nonprofits.
-    """
-    completion = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return completion["choices"][0]["message"]["content"]
+## Quick local dev (minimal)
 
-@app.route('/chat', methods=['POST'])
-def chat():
-    user_message = request.json.get("message", "")
-    response = generate_response(user_message)
-    return jsonify({"response": response})
+### Prerequisites
+- Node.js 18+
+- npm 9+
+- Python 3.8+ (for local static hosting)
 
-if __name__ == '__main__':
-    app.run(port=5000)
-    
+### 1) Install EBS dependencies
+```bash
+cd ebs
+npm install
+```
+
+### 2) Run the EBS
+```bash
+npm run dev
+```
+
+### 3) Serve extension frontend files (new terminal)
+```bash
+cd extension-src
+python3 -m http.server 8080
+```
+
+### 4) Configure local Twitch extension settings
+Point your Twitch extension config (or tunnel URLs) to your local EBS and frontend hosts.
+
+## Packaging
+
+Create the uploadable extension ZIP:
+
+```bash
+cd packaging
+./build-extension-zip.sh
+```
+
+## CI
+
+GitHub Actions builds the project and publishes the extension ZIP artifact for each workflow run.
+
+## Security note
+
+Never commit API keys, OAuth secrets, or private tokens into this repository.
